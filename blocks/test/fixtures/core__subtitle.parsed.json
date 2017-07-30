@@ -1,0 +1,11 @@
+[
+    {
+        "blockName": "core/subtitle",
+        "attrs": null,
+        "rawContent": "\n<p class=\"wp-block-subtitle\">This is a <em>subtitle</em>.</p>\n"
+    },
+    {
+        "attrs": {},
+        "rawContent": "\n"
+    }
+]

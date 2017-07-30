@@ -18,3 +18,4 @@ import './latest-posts';
 import './cover-image';
 import './cover-text';
 import './verse';
+import './subtitle';
