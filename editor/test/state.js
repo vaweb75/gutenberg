@@ -7,7 +7,7 @@ import deepFreeze from 'deep-freeze';
 /**
  * WordPress dependencies
  */
-import { registerBlockType, unregisterBlockType } from 'blocks';
+import { registerBlockType, unregisterBlockType, getBlockType } from 'blocks';
 
 /**
  * Internal dependencies
@@ -1083,8 +1083,10 @@ describe( 'state', () => {
 			const initial = userData( undefined, {
 				type: 'LOAD_USER_DATA',
 			} );
-
-			expect( initial.recentlyUsedBlocks ).toEqual( expect.arrayContaining( [ 'core/test-block', 'core/text' ] ) );
+			initial.recentlyUsedBlocks.forEach(
+				block => expect( getBlockType( block ).category ).toEqual( 'common' )
+			);
+			expect( initial.recentlyUsedBlocks ).toHaveLength( 8 );
 		} );
 	} );
 } );
