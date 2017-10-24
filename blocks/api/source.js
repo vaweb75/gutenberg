@@ -2,7 +2,7 @@
  * External dependencies
  */
 import { nodeListToReact, nodeToReact } from 'dom-react';
-import { flow, omit } from 'lodash';
+import { flatten, flow, omit } from 'lodash';
 import {
 	attr as originalAttr,
 	prop as originalProp,
@@ -25,12 +25,8 @@ function withKnownSourceFlag( fn ) {
 	} );
 }
 
-function toArray( ...args ) {
-	return [ toElement( ...args ) ];
-}
-
-function toElement( type, props, ...children ) {
-	return [ type, omit( props, 'key' ), ...children ];
+function toArray( type, props, ...children ) {
+	return [ [ type, omit( props, 'key' ), ...children ] ];
 }
 
 export const attr = withKnownSourceFlag( originalAttr );
@@ -61,6 +57,6 @@ export const node = withKnownSourceFlag( ( selector ) => {
 			match = domNode.querySelector( selector );
 		}
 
-		return nodeToReact( match, toElement );
+		return flatten( nodeToReact( match, toArray ) );
 	};
 } );
