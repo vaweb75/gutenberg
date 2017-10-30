@@ -249,6 +249,16 @@ export function getCurrentPost( state ) {
 }
 
 /**
+ * Returns the author id of the post currently being edited
+ *
+ * @param  {Object} state Global application state
+ * @return {Number}      ID of post author
+ */
+export function getCurrentPostAuthor( state ) {
+	return getCurrentPost( state ).author;
+}
+
+/**
  * Returns the post type of the post currently being edited
  *
  * @param  {Object} state Global application state
