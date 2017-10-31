@@ -43,23 +43,28 @@ function gutenberg_render_block_core_author( $attributes ) {
 }
 
 register_block_type( 'core/author', array(
-	'attributes'      => array(
-		'hideBio'    => array(
-			'type'    => 'boolean',
-			'default' => false,
-		),
-		'hideAvatar' => array(
-			'type'    => 'boolean',
-			'default' => false,
-		),
-		'hideName'   => array(
-			'type'    => 'boolean',
-			'default' => false,
-		),
-		'align'      => array(
-			'type'    => 'string',
-			'default' => 'center',
-		),
-	),
 	'render_callback' => 'gutenberg_render_block_core_author',
+	'attributes'      => array(
+		'hideBio'    =>
+			array(
+				'type'    => 'boolean',
+				'default' => false,
+			),
+		'hideAvatar' =>
+			array(
+				'type'    => 'boolean',
+				'default' => false,
+			),
+		'hideName'   =>
+			array(
+				'type'    => 'boolean',
+				'default' => false,
+			),
+		'align'      =>
+			array(
+				'type'    => 'string',
+				'default' => 'center',
+			),
+	),
+
 ) );
