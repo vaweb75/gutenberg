@@ -23,7 +23,8 @@ import {
 	isEditedPostDirty,
 	isCleanNewPost,
 	getCurrentPost,
-	getCurrentPostId,
+	getCurrentPostAuthor,
+	getCurrentPostId,	
 	getCurrentPostLastRevisionId,
 	getCurrentPostRevisionsCount,
 	getCurrentPostType,
@@ -930,6 +931,18 @@ describe( 'selectors', () => {
 			};
 
 			expect( getCurrentPostType( state ) ).toBe( 'post' );
+		} );
+	} );
+
+	describe( 'getCurrentPostAuthor', () => {
+		it( 'should return the post type', () => {
+			const state = {
+				currentPost: {
+					author: 232,
+				},
+			};
+
+			expect( getCurrentPostAuthor( state ) ).toBe( 232 );
 		} );
 	} );
 
