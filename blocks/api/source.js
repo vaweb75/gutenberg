@@ -1,8 +1,7 @@
 /**
  * External dependencies
  */
-import { nodeListToReact, nodeToReact } from 'dom-react';
-import { flatten, flow, omit } from 'lodash';
+import { flow } from 'lodash';
 import {
 	attr as originalAttr,
 	prop as originalProp,
@@ -10,6 +9,11 @@ import {
 	text as originalText,
 	query as originalQuery,
 } from 'hpq';
+
+/**
+ * Internal dependencies
+ */
+import { createSimpleNode, createSimpleNodeList } from './simple-dom';
 
 /**
  * Given a source function creator, returns a new function which applies an
@@ -25,16 +29,12 @@ function withKnownSourceFlag( fn ) {
 	} );
 }
 
-function toArray( type, props, ...children ) {
-	return [ [ type, omit( props, 'key' ), ...children ] ];
-}
-
 export const attr = withKnownSourceFlag( originalAttr );
 export const prop = withKnownSourceFlag( originalProp );
 export const html = withKnownSourceFlag( originalHtml );
 export const text = withKnownSourceFlag( originalText );
 export const query = withKnownSourceFlag( originalQuery );
-export const children = withKnownSourceFlag( ( selector ) => {
+export const children = withKnownSourceFlag( ( selector, filter ) => {
 	return ( domNode ) => {
 		let match = domNode;
 
@@ -43,13 +43,13 @@ export const children = withKnownSourceFlag( ( selector ) => {
 		}
 
 		if ( match ) {
-			return nodeListToReact( match.childNodes || [], toArray );
+			return createSimpleNodeList( match.childNodes || [], filter );
 		}
 
 		return [];
 	};
 } );
-export const node = withKnownSourceFlag( ( selector ) => {
+export const node = withKnownSourceFlag( ( selector, filter ) => {
 	return ( domNode ) => {
 		let match = domNode;
 
@@ -57,6 +57,6 @@ export const node = withKnownSourceFlag( ( selector ) => {
 			match = domNode.querySelector( selector );
 		}
 
-		return flatten( nodeToReact( match, toArray ) );
+		return createSimpleNode( match, filter );
 	};
 } );

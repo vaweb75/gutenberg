@@ -7,7 +7,6 @@ import classnames from 'classnames';
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
-import { concatChildren } from '@wordpress/element';
 import { Autocomplete, PanelBody } from '@wordpress/components';
 
 /**
@@ -83,7 +82,7 @@ registerBlockType( 'core/paragraph', {
 
 	merge( attributes, attributesToMerge ) {
 		return {
-			content: concatChildren( attributes.content, attributesToMerge.content ),
+			content: [ ...attributes.content, ...attributesToMerge.content ],
 		};
 	},
 
