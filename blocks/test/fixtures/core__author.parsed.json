@@ -1,0 +1,14 @@
+[
+    {
+        "blockName": "core/author",
+        "attrs": {
+			"hideBio": false,
+			"align": "center"
+        },
+        "rawContent": ""
+    },
+    {
+        "attrs": {},
+        "rawContent": "\n"
+    }
+]
