@@ -24,7 +24,7 @@ import {
 	isCleanNewPost,
 	getCurrentPost,
 	getCurrentPostAuthor,
-	getCurrentPostId,	
+	getCurrentPostId,
 	getCurrentPostLastRevisionId,
 	getCurrentPostRevisionsCount,
 	getCurrentPostType,
