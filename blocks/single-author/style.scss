@@ -1,16 +1,16 @@
 .blocks-single-author {
-	text-align: left;
-	p  {
-		img {
-			float: left;
-			margin-right: 20px;
-			display: block;
-		}
-
-		&:after {
+	&.alignright, &.alignleft {
+		max-width: 50%;
+	}
+	&.withBio {
+		text-align: left;
+	}
+	&.noBio {
+		text-align: center;
+	}
+	p:after {
 			content: "";
 			clear: both;
 			display: block;
-		}
 	}
 }

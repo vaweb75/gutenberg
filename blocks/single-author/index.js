@@ -11,11 +11,11 @@ import './style.scss';
 
 function SingleAuthor( { avatar, bio, name } ) {
 	return (
-		<section className="blocks-single-author">
+		<section className={ `blocks-single-author ${ bio ? 'withBio' : 'noBio' } ` }>
 			{ name && <h2> { name }</h2> }
 			{ ( avatar || bio ) && (
 				<p>
-					{ avatar && <img src={ avatar } alt={ __( 'avatar' ) } /> }
+					{ avatar && <img src={ avatar } alt={ __( 'avatar' ) } className={ bio ? 'alignleft' : 'aligncenter' } /> }
 					{ bio }
 				</p>
 			) }

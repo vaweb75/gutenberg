@@ -25,14 +25,22 @@ function gutenberg_render_block_core_author( $attributes ) {
 
 	$content_markup = '';
 	if ( ! $attributes['hideAvatar'] || ! $attributes['hideBio'] ) {
+		$img_markup = '';
+		if ( ! $attributes['hideAvatar'] ) {
+			$img_markup = sprintf(
+				'<img src="%1$s" class="%2$s" />',
+				esc_attr( get_avatar_url( get_the_author_meta( 'ID' ) ) ),
+				$attributes['hideBio'] ? 'aligncenter' : 'alignleft'
+			);
+		}
 		$content_markup .= sprintf(
 			'<p>%1$s%2$s</p>',
-			$attributes['hideAvatar'] ? '' : get_avatar( get_the_author_meta( 'ID' ) ),
+			$img_markup,
 			$attributes['hideBio'] ? '' : esc_html( strip_tags( get_the_author_meta( 'description' ) ) )
 		);
 	}
-
-	$class = "blocks-single-author align{$align}";
+	$bio_class = $attributes['hideBio'] ? 'noBio' : 'withBio';
+	$class     = "blocks-single-author align{$align} {$align} {$bio_class}";
 
 	return sprintf(
 		'<section class="%1$s">%2$s%3$s</section>',
