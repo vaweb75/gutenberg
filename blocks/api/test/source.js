@@ -4,11 +4,6 @@
 import { parse } from 'hpq';
 
 /**
- * WordPress dependencies
- */
-import { renderToString } from '@wordpress/element';
-
-/**
  * Internal dependencies
  */
 import { createHTMLFromSimpleNodeList } from '../../api/simple-dom';
