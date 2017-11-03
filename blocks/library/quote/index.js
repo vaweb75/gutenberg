@@ -219,10 +219,10 @@ registerBlockType( 'core/quote', {
 				className={ `blocks-quote-style-${ style }` }
 				style={ { textAlign: align ? align : null } }
 			>
-				<Editable.Value value={ value } />
-				{ citation && citation.length > 0 && (
-					<footer><Editable.Value value={ citation } /></footer>
+				{ value.map( ( [ tagName, , content ], i ) =>
+					<Editable.Value tagName={ tagName } value={ content } key={ i } />
 				) }
+				<Editable.Value tagName="footer" value={ citation } />
 			</blockquote>
 		);
 	},

@@ -182,7 +182,7 @@ registerBlockType( 'core/cover-image', {
 
 		return (
 			<section className={ classes } style={ style }>
-				<h2><Editable.Value value={ title } /></h2>
+				<Editable.Value tagName="h2" value={ title } />
 			</section>
 		);
 	},

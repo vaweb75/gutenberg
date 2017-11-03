@@ -110,7 +110,7 @@ registerBlockType( 'core/text-columns', {
 			<section className={ `align${ width } columns-${ columns }` }>
 				{ times( columns, ( index ) =>
 					<div className="wp-block-column" key={ `column-${ index }` }>
-						<p>{ content && content[ index ] && <Editable.Value value={ content[ index ] } /> }</p>
+						<Editable.Value tagName="p" value={ content } />
 					</div>
 				) }
 			</section>
