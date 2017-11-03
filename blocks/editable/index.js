@@ -75,28 +75,6 @@ function getFormatProperties( formatName, parents ) {
 
 const DEFAULT_FORMATS = [ 'bold', 'italic', 'strikethrough', 'link' ];
 
-/**
- * Transforms internal block's representation into an Element.
- *
- * @param {Array} value Value to transform
- * @return {WPElement} Element.
- */
-export function valueToElement( value ) {
-	if ( ! Array.isArray( value ) ) {
-		return value;
-	}
-
-	return value.map( ( element, i ) => {
-		if ( typeof element === 'string' ) {
-			return element;
-		}
-
-		const [ type, props, ...children ] = element;
-
-		return createElement( type, { ...props, key: i }, ...valueToElement( children ) );
-	} );
-}
-
 export default class Editable extends Component {
 	constructor( props ) {
 		super( ...arguments );
@@ -745,10 +723,17 @@ Editable.defaultProps = {
 	formatters: [],
 };
 
-Editable.Value = ( { tagName: TagName = 'div', value = [], ...props } ) => {
+Editable.Value = ( { tagName = 'div', value = [], ...props } ) => {
+	const TagName = tagName.toLowerCase();
 	const HTML = createHTMLFromSimpleNodeList( value );
 
 	return (
 		<TagName dangerouslySetInnerHTML={ { __html: HTML } } { ...props } />
 	);
 };
+
+Editable.Values = ( { value = [] } ) => value.map(
+	( [ tagName, attributes, ...children ], i ) => (
+		<Editable.Value tagName={ tagName } value={ children } key={ i } { ...attributes } />
+	)
+);

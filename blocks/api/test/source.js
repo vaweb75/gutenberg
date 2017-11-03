@@ -11,8 +11,8 @@ import { renderToString } from '@wordpress/element';
 /**
  * Internal dependencies
  */
+import { createHTMLFromSimpleNodeList } from '../../api/simple-dom';
 import * as sources from '../source';
-import { valueToElement } from '../../editable';
 
 describe( 'sources', () => {
 	const html = '<blockquote><p>A delicious <b>sundae</b> dessert.</p><p>I want it!</p><footer>The Cook</footer></blockquote>';
@@ -35,7 +35,7 @@ describe( 'sources', () => {
 			// between a string and WPElement representation
 			const match = parse( html, sources.children() );
 
-			expect( renderToString( valueToElement( match ) ) ).toBe( html );
+			expect( createHTMLFromSimpleNodeList( match ) ).toBe( html );
 		} );
 	} );
 
@@ -52,7 +52,7 @@ describe( 'sources', () => {
 			const match = parse( html, sources.node() );
 
 			expect(
-				renderToString( valueToElement( [ match ] ) )
+				createHTMLFromSimpleNodeList( [ match ] )
 			).toBe(
 				`<body>${ html }</body>`
 			);
@@ -66,7 +66,7 @@ describe( 'sources', () => {
 			const match = parse( html, sources.query( 'blockquote > p', sources.node( ) ) );
 
 			expect(
-				renderToString( valueToElement( match ) )
+				createHTMLFromSimpleNodeList( match )
 			).toBe(
 				'<p>A delicious <b>sundae</b> dessert.</p><p>I want it!</p>'
 			);

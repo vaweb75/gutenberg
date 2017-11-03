@@ -1,7 +1,7 @@
 /**
  * External dependencies
  */
-import { shallow } from 'enzyme';
+import { render, shallow } from 'enzyme';
 
 /**
  * Internal dependencies
@@ -152,15 +152,9 @@ describe( 'Editable', () => {
 	} );
 
 	describe( 'Editable.Value', () => {
-		const Component = ( { value } ) => (
-			<div>
-				<Editable.Value value={ value } />
-			</div>
-		);
-
 		it( 'should render value containing string', () => {
 			const value = [ 'Hello, Dolly!' ];
-			const wrapper = shallow( <Component value={ value } /> );
+			const wrapper = shallow( <Editable.Value value={ value } /> );
 
 			expect( wrapper.html() ).toBe( '<div>Hello, Dolly!</div>' );
 		} );
@@ -169,7 +163,7 @@ describe( 'Editable', () => {
 			const value = [
 				[ 'h1', {}, 'This is a header' ],
 			];
-			const wrapper = shallow( <Component value={ value } /> );
+			const wrapper = shallow( <Editable.Value value={ value } /> );
 
 			expect( wrapper.html() ).toBe( '<div><h1>This is a header</h1></div>' );
 		} );
@@ -186,11 +180,33 @@ describe( 'Editable', () => {
 				] ],
 				'.',
 			];
-			const wrapper = shallow( <Component value={ value } /> );
+			const wrapper = shallow( <Editable.Value value={ value } /> );
 
 			expect( wrapper.html() ).toBe(
 				'<div>This is a <strong>paragraph</strong> with a <a href=\"https://w.org/\">link with <b>bold <i>and italics</i></b></a>.</div>'
 			);
+		} );
+
+		describe( 'Editable.Values', () => {
+			const Blockquote = ( { value } ) => (
+				<blockquote>
+					<Editable.Values value={ value } />
+				</blockquote>
+			);
+
+			it( 'should render multiple values', () => {
+				const value = [
+					[ 'p', {}, 'This is a first paragraph' ],
+					[ 'p', {}, 'This is a second paragraph' ],
+				];
+				const wrapper = shallow( <Blockquote value={ value } /> );
+
+				expect(
+					wrapper.html()
+				).toBe(
+					'<blockquote><p>This is a first paragraph</p><p>This is a second paragraph</p></blockquote>'
+				);
+			} );
 		} );
 	} );
 } );
