@@ -20,7 +20,7 @@ import 'element-closest';
 /**
  * WordPress dependencies
  */
-import { createElement, Component } from '@wordpress/element';
+import { Component } from '@wordpress/element';
 import { keycodes } from '@wordpress/utils';
 
 /**
@@ -726,6 +726,10 @@ Editable.defaultProps = {
 Editable.Value = ( { tagName = 'div', value = [], ...props } ) => {
 	const TagName = tagName.toLowerCase();
 	const HTML = createHTMLFromSimpleNodeList( value );
+
+	if ( ! HTML ) {
+		return null;
+	}
 
 	return (
 		<TagName dangerouslySetInnerHTML={ { __html: HTML } } { ...props } />

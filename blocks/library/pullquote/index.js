@@ -104,8 +104,8 @@ registerBlockType( 'core/pullquote', {
 
 		return (
 			<blockquote className={ `align${ align }` }>
-				{ value.map( ( [ tagName, , content ], i ) =>
-					<Editable.Value tagName={ tagName } value={ content } key={ i } />
+				{ value.map( ( [ , , content ], i ) =>
+					<Editable.Value tagName="p" value={ content } key={ i } />
 				) }
 				<Editable.Value tagName="footer" value={ citation } />
 			</blockquote>
