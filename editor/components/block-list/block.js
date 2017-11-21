@@ -37,6 +37,7 @@ import {
 	startTyping,
 	stopTyping,
 	updateBlockAttributes,
+	toggleSelectionDisable,
 } from '../../actions';
 import {
 	getBlock,
@@ -50,6 +51,7 @@ import {
 	isBlockMultiSelected,
 	isBlockSelected,
 	isFirstMultiSelectedBlock,
+	isSelectionDisable,
 	isTyping,
 	getBlockMode,
 } from '../../selectors';
@@ -346,7 +348,7 @@ class BlockListBlock extends Component {
 		// (mover, toolbar, wrapper) and the display of the block content.
 
 		// Generate the wrapper class names handling the different states of the block.
-		const { isHovered, isSelected, isMultiSelected, isFirstMultiSelected, focus } = this.props;
+		const { isHovered, isSelected, isMultiSelected, isFirstMultiSelected, focus, selectionDisable, toggleSelection } = this.props;
 		const showUI = isSelected && ( ! this.props.isTyping || ( focus && focus.collapsed === false ) );
 		const { error } = this.state;
 		const wrapperClassName = classnames( 'editor-block-list__block', {
@@ -411,6 +413,8 @@ class BlockListBlock extends Component {
 								mergeBlocks={ this.mergeBlocks }
 								className={ className }
 								id={ block.uid }
+								selectionDisable={ selectionDisable }
+								toggleSelection={ toggleSelection }
 							/>
 						) }
 						{ isValid && mode === 'html' && (
@@ -451,6 +455,7 @@ export default connect(
 			order: getBlockIndex( state, ownProps.uid ),
 			meta: getEditedPostAttribute( state, 'meta' ),
 			mode: getBlockMode( state, ownProps.uid ),
+			selectionDisable: isSelectionDisable( state ),
 		};
 	},
 	( dispatch, ownProps ) => ( {
@@ -510,6 +515,9 @@ export default connect(
 
 		onMetaChange( meta ) {
 			dispatch( editPost( { meta } ) );
+		},
+		toggleSelection() {
+			dispatch( toggleSelectionDisable() );
 		},
 	} )
 )( BlockListBlock );

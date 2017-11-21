@@ -15,6 +15,7 @@ import {
 	saveReusableBlock,
 	convertBlockToStatic,
 	convertBlockToReusable,
+	toggleSelectionDisable,
 } from '../actions';
 
 describe( 'actions', () => {
@@ -161,6 +162,14 @@ describe( 'actions', () => {
 		expect( convertBlockToReusable( uid ) ).toEqual( {
 			type: 'CONVERT_BLOCK_TO_REUSABLE',
 			uid,
+		} );
+	} );
+
+	describe( 'toggleSelectionDisable', () => {
+		it( 'should return the TOGGLE_SELECTION_DISABLE action', () => {
+			expect( toggleSelectionDisable() ).toEqual( {
+				type: 'TOGGLE_SELECTION_DISABLE',
+			} );
 		} );
 	} );
 } );

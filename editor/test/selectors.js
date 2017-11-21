@@ -76,6 +76,7 @@ import {
 	isMetaBoxStateDirty,
 	getReusableBlock,
 	isSavingReusableBlock,
+	isSelectionDisable,
 	getReusableBlocks,
 } from '../selectors';
 
@@ -1745,6 +1746,28 @@ describe( 'selectors', () => {
 			};
 
 			expect( isTyping( state ) ).toBe( false );
+		} );
+	} );
+
+	describe( 'isSelectionDisable', () => {
+		it( 'should return the isSelectionDisable flag if selection is disable', () => {
+			const state = {
+				blockSelection: {
+					isSelectionDisable: true,
+				},
+			};
+
+			expect( isSelectionDisable( state ) ).toBe( true );
+		} );
+
+		it( 'should return false if selection is enable', () => {
+			const state = {
+				blockSelection: {
+					isSelectionDisable: false,
+				},
+			};
+
+			expect( isSelectionDisable( state ) ).toBe( false );
 		} );
 	} );
 

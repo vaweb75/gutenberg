@@ -134,6 +134,12 @@ export function clearSelectedBlock() {
 	};
 }
 
+export function toggleSelectionDisable() {
+	return {
+		type: 'TOGGLE_SELECTION_DISABLE',
+	};
+}
+
 /**
  * Returns an action object signalling that a blocks should be replaced with
  * one or more replacement blocks.

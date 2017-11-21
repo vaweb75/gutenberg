@@ -331,10 +331,17 @@ export function isTyping( state = false, action ) {
  * @param  {Object} action Dispatched action
  * @return {Object}        Updated state
  */
-export function blockSelection( state = { start: null, end: null, focus: null, isMultiSelecting: false }, action ) {
+export function blockSelection( state = {
+	start: null,
+	end: null,
+	focus: null,
+	isMultiSelecting: false,
+	isSelectionDisable: false,
+}, action ) {
 	switch ( action.type ) {
 		case 'CLEAR_SELECTED_BLOCK':
 			return {
+				...state,
 				start: null,
 				end: null,
 				focus: null,
@@ -377,6 +384,7 @@ export function blockSelection( state = { start: null, end: null, focus: null, i
 			};
 		case 'INSERT_BLOCKS':
 			return {
+				...state,
 				start: action.blocks[ 0 ].uid,
 				end: action.blocks[ 0 ].uid,
 				focus: {},
@@ -387,10 +395,16 @@ export function blockSelection( state = { start: null, end: null, focus: null, i
 				return state;
 			}
 			return {
+				...state,
 				start: action.blocks[ 0 ].uid,
 				end: action.blocks[ 0 ].uid,
 				focus: {},
 				isMultiSelecting: false,
+			};
+		case 'TOGGLE_SELECTION_DISABLE':
+			return {
+				...state,
+				isSelectionDisable: ! state.isSelectionDisable,
 			};
 	}
 
