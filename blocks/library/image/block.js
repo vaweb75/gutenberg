@@ -109,7 +109,7 @@ class ImageBlock extends Component {
 	}
 
 	render() {
-		const { attributes, setAttributes, focus, setFocus, className, settings } = this.props;
+		const { attributes, setAttributes, focus, setFocus, className, settings, selectionDisable, toggleSelection } = this.props;
 		const { url, alt, caption, align, id, href, width, height } = attributes;
 
 		const availableSizes = this.getAvailableSizes();
@@ -252,11 +252,19 @@ class ImageBlock extends Component {
 									bottomLeft: 'wp-block-image__resize-handler-bottom-left',
 								} }
 								enable={ { top: false, right: true, bottom: false, left: false, topRight: true, bottomRight: true, bottomLeft: true, topLeft: true } }
+								onResizeStart={ () => {
+									if ( ! selectionDisable ) {
+										toggleSelection();
+									}
+								} }
 								onResizeStop={ ( event, direction, elt, delta ) => {
 									setAttributes( {
 										width: parseInt( currentWidth + delta.width, 10 ),
 										height: parseInt( currentHeight + delta.height, 10 ),
 									} );
+									if ( selectionDisable ) {
+										toggleSelection();
+									}
 								} }
 							>
 								{ img }
