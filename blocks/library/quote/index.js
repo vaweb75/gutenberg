@@ -2,6 +2,7 @@
  * External dependencies
  */
 import { isString } from 'lodash';
+import classnames from 'classnames';
 
 /**
  * WordPress dependencies
@@ -170,6 +171,7 @@ registerBlockType( 'core/quote', {
 	edit( { attributes, setAttributes, focus, setFocus, mergeBlocks, className } ) {
 		const { align, value, citation, style } = attributes;
 		const focusedEditable = focus ? focus.editable || 'value' : null;
+		const containerClassname = classnames( className, style === 2 ? 'is-large' : '' );
 
 		return [
 			focus && (
@@ -199,7 +201,7 @@ registerBlockType( 'core/quote', {
 			),
 			<blockquote
 				key="quote"
-				className={ `${ className } blocks-quote-style-${ style }` }
+				className={ containerClassname }
 			>
 				<Editable
 					multiline="p"
@@ -238,7 +240,7 @@ registerBlockType( 'core/quote', {
 
 		return (
 			<blockquote
-				className={ `blocks-quote-style-${ style }` }
+				className={ style === 2 ? 'is-large' : '' }
 				style={ { textAlign: align ? align : null } }
 			>
 				{ value.map( ( paragraph, i ) => (
