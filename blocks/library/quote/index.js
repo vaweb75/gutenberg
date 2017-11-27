@@ -251,7 +251,7 @@ registerBlockType( 'core/quote', {
 		);
 	},
 
-	deprecatedVersions: [
+	deprecated: [
 		{
 			attributes: {
 				...blockAttributes,
