@@ -91,7 +91,7 @@ window._wpGutenbergPost.content = {
 		'<p>Blocks can be anything you need. For instance, you may want to insert a subdued quote as part of the composition of your text, or you may prefer to display a giant stylized one. All of these options are available in the inserter.</p>',
 		'<!-- /wp:paragraph -->',
 
-		'<!-- wp:quote {"style":2} -->',
+		'<!-- wp:quote {"isLarge":true} -->',
 		'<blockquote class="wp-block-quote is-large"><p>There is no greater agony than bearing an untold story inside you.</p><cite>Maya Angelou</cite></blockquote>',
 		'<!-- /wp:quote -->',
 

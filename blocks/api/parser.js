@@ -193,7 +193,13 @@ export function createBlockWithFallback( name, innerHTML, attributes ) {
 				};
 				const deprecatedBlockAttributes = getBlockAttributes( deprecatedBlockType, innerHTML, attributes );
 				const isValid = isValidBlock( innerHTML, deprecatedBlockType, deprecatedBlockAttributes );
-				attributesParsedWithDeprecatedVersion = isValid ? deprecatedBlockAttributes : undefined;
+				if ( isValid ) {
+					// Migrate the attributes
+					attributesParsedWithDeprecatedVersion = deprecatedBlockAttributes;
+					if ( oldBlockType.migrate ) {
+						attributesParsedWithDeprecatedVersion = oldBlockType.migrate( attributesParsedWithDeprecatedVersion );
+					}
+				}
 				return isValid;
 			} );
 

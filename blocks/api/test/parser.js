@@ -233,6 +233,7 @@ describe( 'block parser', () => {
 							},
 						},
 						save: ( { attributes } ) => <span>{attributes.fruit}</span>,
+						migrate: ( attributes ) => ( { fruit: 'Big ' + attributes.fruit } ),
 					},
 				],
 			} );
@@ -243,7 +244,7 @@ describe( 'block parser', () => {
 				{ fruit: 'Bananas' }
 			);
 			expect( block.name ).toEqual( 'core/test-block' );
-			expect( block.attributes ).toEqual( { fruit: 'Bananas' } );
+			expect( block.attributes ).toEqual( { fruit: 'Big Bananas' } );
 			expect( block.isValid ).toBe( true );
 			/* eslint-disable no-console */
 			expect( console.error ).toHaveBeenCalled();

@@ -1,7 +1,7 @@
 /**
  * External dependencies
  */
-import { isString } from 'lodash';
+import { isString, omit } from 'lodash';
 import classnames from 'classnames';
 
 /**
@@ -47,9 +47,9 @@ const blockAttributes = {
 	align: {
 		type: 'string',
 	},
-	style: {
-		type: 'number',
-		default: 1,
+	isLarge: {
+		type: 'boolean',
+		default: false,
 	},
 };
 
@@ -169,9 +169,9 @@ registerBlockType( 'core/quote', {
 	},
 
 	edit( { attributes, setAttributes, focus, setFocus, mergeBlocks, className } ) {
-		const { align, value, citation, style } = attributes;
+		const { align, value, citation, isLarge } = attributes;
 		const focusedEditable = focus ? focus.editable || 'value' : null;
-		const containerClassname = classnames( className, style === 2 ? 'is-large' : '' );
+		const containerClassname = classnames( className, { 'is-large': isLarge } );
 
 		return [
 			focus && (
@@ -179,9 +179,9 @@ registerBlockType( 'core/quote', {
 					<Toolbar controls={ [ 1, 2 ].map( ( variation ) => ( {
 						icon: 1 === variation ? 'format-quote' : 'testimonial',
 						title: sprintf( __( 'Quote style %d' ), variation ),
-						isActive: Number( style ) === variation,
+						isActive: ( isLarge && variation === 2 ) || ( ! isLarge && variation === 1 ),
 						onClick() {
-							setAttributes( { style: variation } );
+							setAttributes( { isLarge: variation === 2 } );
 						},
 					} ) ) } />
 					<AlignmentToolbar
@@ -236,11 +236,11 @@ registerBlockType( 'core/quote', {
 	},
 
 	save( { attributes } ) {
-		const { align, value, citation, style } = attributes;
+		const { align, value, citation, isLarge } = attributes;
 
 		return (
 			<blockquote
-				className={ style === 2 ? 'is-large' : '' }
+				className={ isLarge ? 'is-large' : '' }
 				style={ { textAlign: align ? align : null } }
 			>
 				{ value.map( ( paragraph, i ) => (
@@ -256,11 +256,15 @@ registerBlockType( 'core/quote', {
 	deprecated: [
 		{
 			attributes: {
-				...blockAttributes,
+				...omit( blockAttributes, [ 'isLarge', 'citation' ] ),
 				citation: {
 					type: 'array',
 					source: 'children',
 					selector: 'footer',
+				},
+				style: {
+					type: 'number',
+					default: 1,
 				},
 			},
 
@@ -280,6 +284,13 @@ registerBlockType( 'core/quote', {
 						) }
 					</blockquote>
 				);
+			},
+
+			migrate( attributes ) {
+				return {
+					...omit( attributes, [ 'style' ] ),
+					isLarge: attributes.style === 2,
+				};
 			},
 		},
 	],
