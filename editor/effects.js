@@ -74,7 +74,7 @@ export default {
 			optimist: { type: BEGIN, id: transactionId },
 		} );
 		dispatch( removeNotice( SAVE_POST_NOTICE_ID ) );
-		const Model = wp.api.getPostTypeModel( getCurrentPostType( state ) );
+		const Model = wp.api.getModelByType( getCurrentPostType( state ) );
 		new Model( toSend ).save().done( ( newPost ) => {
 			dispatch( {
 				type: 'RESET_POST',
@@ -160,7 +160,7 @@ export default {
 	TRASH_POST( action, store ) {
 		const { dispatch, getState } = store;
 		const { postId } = action;
-		const Model = wp.api.getPostTypeModel( getCurrentPostType( getState() ) );
+		const Model = wp.api.getModelByType( getCurrentPostType( getState() ) );
 		dispatch( removeNotice( TRASH_POST_NOTICE_ID ) );
 		new Model( { id: postId } ).destroy().then(
 			() => {
