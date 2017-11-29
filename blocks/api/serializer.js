@@ -37,7 +37,8 @@ export function getBlockDefaultClassname( blockName ) {
 
 /**
  * Returns a random base 36 string, 36^7 possible strings, maximum seven chars
- * According to the birthday paradox collisions occur after sqrt(36^7) = 279936
+ * According to the birthday paradox repetition occur after sqrt(36^7) = 279936 random strings are generated
+ * If used to generate ids it's relatively safe as the odds of having 279936 blocks of the same type on a page are really low
  *
  * @return {string}             Random string
  */

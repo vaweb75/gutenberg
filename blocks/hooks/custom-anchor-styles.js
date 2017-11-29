@@ -3,7 +3,7 @@
  * Internal dependencies
  */
 import { Component } from '@wordpress/element';
-import { getBlockRandomAnchor } from '../api';
+import { getBlockRandomAnchor, hasBlockSupport, getBlockType } from '../api';
 
 const CUSTOM_STYLE_ATTRIBUTES = [ 'backgroundColor', 'textColor' ];
 
@@ -22,7 +22,13 @@ class AddAnchorWhenNeeded extends Component {
 }
 
 export function addAnchorWhenStylesNeed( element, props ) {
-	return [ element, <AddAnchorWhenNeeded key="add-anchor" { ...props } /> ];
+	if ( hasBlockSupport( props.name, 'anchor' ) ) {
+		const blockType = getBlockType( props.name );
+		if ( CUSTOM_STYLE_ATTRIBUTES.some( attr => blockType.attributes[ attr ] ) ) {
+			element = [ element, <AddAnchorWhenNeeded key="add-anchor" { ...props } /> ];
+		}
+	}
+	return element;
 }
 
 export default function customAnchorStyles( { addFilter } ) {
