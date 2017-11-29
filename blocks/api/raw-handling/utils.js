@@ -34,7 +34,7 @@ const inlineWrapperWhiteList = {
 const whitelist = {
 	...inlineWhitelist,
 	...inlineWrapperWhiteList,
-	img: { attributes: [ 'src', 'alt' ] },
+	img: { attributes: [ 'src', 'alt' ], classes: [ 'alignleft', 'aligncenter', 'alignright', 'alignnone' ] },
 	figure: {},
 	blockquote: {},
 	hr: {},
@@ -60,6 +60,14 @@ export function isAttributeWhitelisted( tag, attribute ) {
 		whitelist[ tag ] &&
 		whitelist[ tag ].attributes &&
 		whitelist[ tag ].attributes.indexOf( attribute ) !== -1
+	);
+}
+
+export function isClassWhitelisted( tag, name ) {
+	return (
+		whitelist[ tag ] &&
+		whitelist[ tag ].classes &&
+		whitelist[ tag ].classes.indexOf( name ) !== -1
 	);
 }
 

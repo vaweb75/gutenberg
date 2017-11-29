@@ -21,15 +21,17 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import { getBlockType } from './registration';
+import { getBlockAttributes } from './parser';
 
 /**
  * Returns a block object given its type and attributes.
  *
- * @param  {String} name             Block name
- * @param  {Object} blockAttributes  Block attributes
- * @return {Object}                  Block object
+ * @param  {String}  name             Block name
+ * @param  {Object}  blockAttributes  Block attributes
+ * @param  {?String} innerHTML        Block HTML
+ * @return {Object}                   Block object
  */
-export function createBlock( name, blockAttributes = {} ) {
+export function createBlock( name, blockAttributes = {}, innerHTML ) {
 	// Get the type definition associated with a registered block.
 	const blockType = getBlockType( name );
 
@@ -52,7 +54,7 @@ export function createBlock( name, blockAttributes = {} ) {
 		uid: uuid(),
 		name,
 		isValid: true,
-		attributes,
+		attributes: innerHTML ? getBlockAttributes( blockType, innerHTML, attributes ) : attributes,
 	};
 }
 

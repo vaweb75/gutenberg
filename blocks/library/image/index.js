@@ -70,6 +70,14 @@ registerBlockType( 'core/image', {
 
 					return tag === 'img' || ( hasImage && ! hasText ) || ( hasImage && tag === 'figure' );
 				},
+				transform: ( node ) => {
+					const targetNode = node.parentNode.querySelector( 'figure,img' );
+					const matches = /align(left|center|right)/.exec( targetNode.className );
+
+					return createBlock( 'core/image', {
+						align: matches ? matches[ 1 ] : undefined,
+					}, targetNode.outerHTML );
+				},
 			},
 			{
 				type: 'files',
