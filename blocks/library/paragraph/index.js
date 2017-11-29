@@ -203,6 +203,7 @@ registerBlockType( 'core/paragraph', {
 
 	supports: {
 		className: false,
+		anchor: true,
 	},
 
 	attributes: {
