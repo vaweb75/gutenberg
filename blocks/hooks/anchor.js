@@ -34,9 +34,6 @@ export function addAttribute( settings ) {
 		settings.attributes = assign( settings.attributes, {
 			anchor: {
 				type: 'string',
-				source: 'attribute',
-				attribute: 'id',
-				selector: '*',
 			},
 		} );
 	}

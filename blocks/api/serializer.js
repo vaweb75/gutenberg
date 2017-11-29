@@ -1,7 +1,7 @@
 /**
  * External dependencies
  */
-import { isEmpty, reduce, isObject, castArray, compact, startsWith } from 'lodash';
+import { isEmpty, reduce, isObject, castArray, compact, startsWith, random } from 'lodash';
 import { html as beautifyHtml } from 'js-beautify';
 
 /**
@@ -16,14 +16,43 @@ import { getBlockType, getUnknownTypeHandlerName } from './registration';
 import { applyFilters } from '../hooks';
 
 /**
+ * Returns the block's name with common prefixes: 'core/' or 'core-' (in 'core-embed/') dropped
+ *
+ * @param {String}   blockName  The block name
+ * @return {string}             Friendly name
+ */
+function friendlyBlockName( blockName ) {
+	return blockName.replace( /\//, '-' ).replace( /^core-/, '' );
+}
+
+/**
  * Returns the block's default classname from its name
  *
  * @param {String}   blockName  The block name
  * @return {string}             The block's default class
  */
 export function getBlockDefaultClassname( blockName ) {
-	// Drop common prefixes: 'core/' or 'core-' (in 'core-embed/')
-	return 'wp-block-' + blockName.replace( /\//, '-' ).replace( /^core-/, '' );
+	return `wp-block-${ friendlyBlockName( blockName ) }`;
+}
+
+/**
+ * Returns a random base 36 string, 36^7 possible strings, maximum seven chars
+ * According to the birthday paradox collisions occur after sqrt(36^7) = 279936
+ *
+ * @return {string}             Random string
+ */
+function randomBase36String() {
+	return random( 0, Math.pow( 36, 7 ), false ).toString( 36 );
+}
+
+/**
+ * Returns random anchor for the block
+ *
+ * @param {String}   blockName  The block name
+ * @return {string}             The block's default class
+ */
+export function getBlockRandomAnchor( blockName ) {
+	return `wp-block-${ friendlyBlockName( blockName ) }-${ randomBase36String() }`;
 }
 
 /**

@@ -8,6 +8,7 @@ import createHooks from '@wordpress/hooks';
  */
 import anchor from './anchor';
 import customClassName from './custom-class-name';
+import customAnchorStyles from './custom-anchor-styles';
 import generatedClassName from './generated-class-name';
 import matchers from './matchers';
 
@@ -48,6 +49,7 @@ export {
 };
 
 anchor( hooks );
+customAnchorStyles( hooks );
 customClassName( hooks );
 generatedClassName( hooks );
 matchers( hooks );
