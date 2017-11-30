@@ -26,6 +26,7 @@ import {
 	fetchReusableBlocks,
 	convertBlockToStatic,
 	convertBlockToReusable,
+	removeBlock,
 } from '../actions';
 import reducer from '../reducer';
 import effects from '../effects';
@@ -56,13 +57,37 @@ describe( 'effects', () => {
 			};
 			const blockB = {
 				uid: 'ribs',
-				name: 'core/test-block',
+				name: 'core/paragraph',
+				attributes: {
+					content: [ 'test content' ],
+				},
 			};
 			const dispatch = jest.fn();
 			handler( mergeBlocks( blockA, blockB ), { dispatch } );
 
 			expect( dispatch ).toHaveBeenCalledTimes( 1 );
 			expect( dispatch ).toHaveBeenCalledWith( focusBlock( 'chicken' ) );
+		} );
+
+		it( 'should delete blockB if blockA has no merge function and blockB is an empty paragraph', () => {
+			registerBlockType( 'core/test-block', defaultBlockSettings );
+			const blockA = {
+				uid: 'chicken',
+				name: 'core/test-block',
+			};
+			const blockB = {
+				uid: 'ribs',
+				name: 'core/paragraph',
+				attributes: {
+					content: [],
+				},
+			};
+			const dispatch = jest.fn();
+			handler( mergeBlocks( blockA, blockB ), { dispatch } );
+
+			expect( dispatch ).toHaveBeenCalledTimes( 2 );
+			expect( dispatch ).toHaveBeenCalledWith( focusBlock( 'chicken' ) );
+			expect( dispatch ).toHaveBeenCalledWith( removeBlock( 'ribs' ) );
 		} );
 
 		it( 'should merge the blocks if blocks of the same type', () => {

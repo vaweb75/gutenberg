@@ -35,6 +35,7 @@ import {
 	requestMetaBoxUpdates,
 	updateReusableBlock,
 	saveReusableBlock,
+	removeBlock,
 } from './actions';
 import {
 	getCurrentPost,
@@ -217,6 +218,9 @@ export default {
 		// Only focus the previous block if it's not mergeable
 		if ( ! blockType.merge ) {
 			dispatch( focusBlock( blockA.uid ) );
+			if ( blockB.name === 'core/paragraph' && ! blockB.attributes.content.length ) {
+				dispatch( removeBlock( blockB.uid ) );
+			}
 			return;
 		}
 
